@@ -21,4 +21,4 @@ npm run lint
 ```
 
 ### Customize configuration
-[Demo Link](https://github.com/gammy12380/vue-payment/#/orderinfo).
+[Demo Link - 網址點我](https://gammy12380.github.io/vue-payment/).
