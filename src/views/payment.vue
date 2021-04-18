@@ -94,7 +94,7 @@
                                     changeCard($event);
                                 "
                             />
-                            <div class="alert" v-if="this.checks.credit.card === false">
+                            <div class="alert" v-if="!this.checks.credit.card">
                                 <i class="fas fa-exclamation-triangle"></i>請填妥卡號
                             </div>
                         </div>
@@ -108,7 +108,7 @@
                             />
                             <div
                                 class="alert"
-                                v-if="this.checks.credit.cardName === false"
+                                v-if="!this.checks.credit.cardName"
                             >
                                 <i class="fas fa-exclamation-triangle"></i>請填妥持卡人
                             </div>
@@ -130,7 +130,7 @@
                             />
                             <div
                                 class="alert"
-                                v-if="this.checks.credit.cardTime === false"
+                                v-if="!this.checks.credit.cardTime"
                             >
                                 <i class="fas fa-exclamation-triangle"></i>請填妥卡片效期
                             </div>
@@ -144,7 +144,7 @@
                                 v-model.trim="orderInfo.credit.secure"
                                 @keyup="checkSecure(orderInfo.credit.secure)"
                             />
-                            <div class="alert" v-if="this.checks.credit.secure === false">
+                            <div class="alert" v-if="!this.checks.credit.secure">
                                 <i class="fas fa-exclamation-triangle"></i>請填妥安全碼
                             </div>
                         </div>
@@ -156,7 +156,7 @@
                                 v-model.trim="orderInfo.credit.email"
                                 @keyup="checkEmail(orderInfo.credit.email)"
                             />
-                            <div class="alert" v-if="this.checks.credit.email === false">
+                            <div class="alert" v-if="!this.checks.credit.email">
                                 <i class="fas fa-exclamation-triangle"></i>請填妥信箱
                             </div>
                         </div>
@@ -194,7 +194,7 @@
                                 v-model.trim="orderInfo.atm.orderName"
                                 @keyup="checkName(orderInfo.atm.orderName)"
                             />
-                            <div class="alert" v-if="this.checks.atm.orderName === false">
+                            <div class="alert" v-if="!this.checks.atm.orderName">
                                 <i class="fas fa-exclamation-triangle"></i>請填妥訂購人
                             </div>
                         </div>
@@ -216,7 +216,7 @@
                                 v-model.trim="orderInfo.atm.email"
                                 @keyup="checkEmail(orderInfo.atm.email)"
                             />
-                            <div class="alert" v-if="this.checks.atm.email === false">
+                            <div class="alert" v-if="!this.checks.atm.email">
                                 <i class="fas fa-exclamation-triangle"></i>請填妥信箱
                             </div>
                         </div>
@@ -243,7 +243,7 @@
                             />
                             <div
                                 class="alert"
-                                v-if="this.checks.shop.orderName === false"
+                                v-if="!this.checks.shop.orderName"
                             >
                                 <i class="fas fa-exclamation-triangle"></i>請填妥訂購人
                             </div>
@@ -269,7 +269,7 @@
                                 v-model.trim="orderInfo.shop.email"
                                 @keyup="checkEmail(orderInfo.shop.email)"
                             />
-                            <div class="alert" v-if="this.checks.shop.email === false">
+                            <div class="alert" v-if="!this.checks.shop.email">
                                 <i class="fas fa-exclamation-triangle"></i>請填妥信箱
                             </div>
                         </div>
@@ -438,52 +438,49 @@ export default {
         checkCard(card) {
             let reg = /^[A-Za-z0-9]+$/;
             if (reg.test(card) && card.length === 4) {
-                return (this.checks.credit.card = true);
+                this.checks.credit.card = true;
             } else {
-                return (this.checks.credit.card = false);
+                this.checks.credit.card = false;
             }
         },
         checkName(cardName) {
             let reg = /^[\u4e00-\u9fa5a-zA-Z\S]/;
             if (reg.test(cardName)) {
-                if (this.paymentCurrent === 1)
-                    return (this.checks.credit.cardName = true);
-                if (this.paymentCurrent === 2) return (this.checks.atm.orderName = true);
-                if (this.paymentCurrent === 3) return (this.checks.shop.orderName = true);
+                if (this.paymentCurrent === 1) this.checks.credit.cardName = true;
+                if (this.paymentCurrent === 2) this.checks.atm.orderName = true;
+                if (this.paymentCurrent === 3) this.checks.shop.orderName = true;
             } else {
-                if (this.paymentCurrent === 1)
-                    return (this.checks.credit.cardName = false);
-                if (this.paymentCurrent === 2) return (this.checks.atm.orderName = false);
-                if (this.paymentCurrent === 3)
-                    return (this.checks.shop.orderName = false);
+                if (this.paymentCurrent === 1) this.checks.credit.cardName = false;
+                if (this.paymentCurrent === 2) this.checks.atm.orderName = false;
+                if (this.paymentCurrent === 3) this.checks.shop.orderName = false;
             }
         },
         checkCardTime(time) {
             let reg = /^[\d^\d\s]{2,}\S*$/;
             if (reg.test(time)) {
-                return (this.checks.credit.cardTime = true);
+                this.checks.credit.cardTime = true;
             } else {
-                return (this.checks.credit.cardTime = false);
+                this.checks.credit.cardTime = false;
             }
         },
         checkSecure(secure) {
             let reg = /^[\d^\d]{3,}\S*$/;
             if (reg.test(secure)) {
-                return (this.checks.credit.secure = true);
+                this.checks.credit.secure = true;
             } else {
-                return (this.checks.credit.secure = false);
+                this.checks.credit.secure = false;
             }
         },
         checkEmail(email) {
             let reg = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})\S*$/;
             if (reg.test(email)) {
-                if (this.paymentCurrent === 1) return (this.checks.credit.email = true);
-                if (this.paymentCurrent === 2) return (this.checks.atm.email = true);
-                if (this.paymentCurrent === 3) return (this.checks.shop.email = true);
+                if (this.paymentCurrent === 1) this.checks.credit.email = true;
+                if (this.paymentCurrent === 2) this.checks.atm.email = true;
+                if (this.paymentCurrent === 3) this.checks.shop.email = true;
             } else {
-                if (this.paymentCurrent === 1) return (this.checks.credit.email = false);
-                if (this.paymentCurrent === 2) return (this.checks.atm.email = false);
-                if (this.paymentCurrent === 3) return (this.checks.shop.email = false);
+                if (this.paymentCurrent === 1) this.checks.credit.email = false;
+                if (this.paymentCurrent === 2) this.checks.atm.email = false;
+                if (this.paymentCurrent === 3) this.checks.shop.email = false;
             }
         },
         changeCard(e) {
